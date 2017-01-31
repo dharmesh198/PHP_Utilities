@@ -1,0 +1,47 @@
+Last project - Bluehornet email marketing application
+-----------------------------------------------------
+
+-> developed in PHP, Oracle, MySQL, AJAX, jQuery, perl, XMLRPC. 
+-> Application is hosted in AWS cloud. Provides API to access majority of the application features starting from composing message/email, scheduling it, contacts, sending mail, transaction mail, segmentation process, import/export in bulk etc.
+-> Application offers advanced segmentation process, import/export, mail processing and sending, Open and click tracking etc.
+-> Developed a very robust job engine to manage all the backend jobs automatically through UI. We can add new jobs, schedule recurring jobs or one time jobs, enable/disable through UI easily.
+-> Integration with Duo for two way authentication for login
+-> Magento plugin to provide all the features of the application
+-> Integration with Sales force to access contacts from sales force system etc.
+-> Daily mail sending volume is around 30 million.
+
+Challenging work 1 -> Assigned a task to fix one long standing defect which was never reproduced by anyone but often reported by their clients. It impacted thier business upto great extent because their customers were loosing their ability to track links in email due to this defect. Multiple people from dev team attempted to fix this but failed, QA team was never able to reproduce it anywhere on staging or production.
+
+Approach to fix this -> When I was given this defect to fix, I had no prior knowledge of the application code and that feature. 
+ - I quickly studied code to understand the flow first. 
+ - Identified important places to add releavant logs 
+ - Develped and added a logic to detect the anomalies in the links before the submit which gave me live examples of emails having issues
+ - Studies those live examples and log and finally found the actual root cause of the issue 
+
+Challenging work 2 -> Find root cause of click tracking not working when we were migrating from RS to AWS cloud
+
+Product Catalog management system
+---------------------------------
+
+-> developed in PHP, MySQL, jQuery, AJAX, Perl snapshot script
+-> Backend system to manage 7 million SKUs/products and their prices, applications, attributes for eCommerce sites. Auto products.
+-> We have developed highly robust import/export system to load data in bulk, very fast. Able to process around 100K records in less than 30 seconds.
+-> Integration with other systems to manage inventory
+-> Snapshot process to take snapshot of entire database to be processed and create index on products so that eCommerce sites can search it easily.
+-> Snapshot copies all listed tables to new database from slave, apply various business rules to activate/deactivate products on live sites, send data to downstream systems so that they can create index on it (endeca)
+
+-> Snapshot used to take 50+ total hours to run on master-slave, We optimized it to run within 12 hours total and only on slave. eliminating the downtime of 15 hours twice in a week. This was a huge win for business.
+
+ --> Identified areas to make code changes so that it can be made independent of master db server
+ --> Logged execution time of each SQL in log table to find out long running SQL and then optimized them or rewrite them.
+ --> Done the same for all the functions of the script.
+ --> Rewrote some of the functions, identified which all could be run in parallel as logic independently.
+ --> Failure notification, if something fails it will stop the process
+ 
+Order management system
+---------------------------------
+-> Backend system to process orders placed on various eCommerce sites
+-> order comes to system through API call
+-> System picks up from multiple vendors or private lable to process orders
+-> Senior developer for revamping entire order management system
+

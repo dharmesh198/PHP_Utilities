@@ -1,0 +1,188 @@
+http://niklasschlimm.blogspot.com/2011/07/top-10-git-commands-for-newbie.html
+
+https://github.com/dharmesh198/EXAMPLE.git
+
+git init : to put this directory under version control.
+git add --all : to stage files into the staging area.
+git status : to see what you've changed
+git diff : to see what you've changed
+git commit : to actually record the snapshot forever into your local repository
+
+git push : to upload your changes to a remote repository
+git fetch : to download changes from a remote repository to your local repository
+git merge : to download changes from a remote repository to your local repository
+git pull : is shorthand for git fetch followed by git merge FETCH_HEAD.
+
+git branch -a : Show all local and remote branches
+git branch -r : Show all remote branches
+
+git checkout -b DP_test2 origin/ticket/459322: Create new branch named "DP_test2" from remote branch ticket/459322
+
+git remote --help
+git remote add umodi ~umodi/repos/bluehornet
+git fetch umodi
+git remote
+
+git log --pretty=format:"%h - %an, %ar : %s" --name-only: To check the log of the file or repository
+
+----------------------------------------
+Update local master branch from Origin master:
+git pull origin master
+--OR JUST--
+git pull
+
+Create a new branch from Master:
+git checkout –b <new_branch>
+--OR--
+git checkout –b <new_branch> master
+
+Create a new branch from another Local Branch:
+git checkout –b <new_branch> <existing_branch>
+
+Create a new branch from another Remote Branch of other user’s repository:
+git fetch <remote_user>
+git checkout –b <new_branch> <remote_user>/<remote_branch>
+
+--e.g.--
+git fetch dchavda
+git checkout –b ISSUE_1 dchavda/ISSUE_1
+
+See uncommitted changes of current branch:
+git status  (This gives changed file names)
+--AND--
+git diff (This gives changed code)
+
+See committed changes of current branch against another branch:
+git diff <another_branch> <current_branch>
+git diff --name-only <another_branch> <current_branch>
+
+--e.g.--
+git diff master ISSUE_1
+git diff --name-only master ISSUE_1
+
+Commit any changes done on current branch:
+git add <file_path>
+git commit -m ‘<Short information of code change.>’
+
+--OR just a Shortcut for above 2 commands--
+git commit -a -m ‘<Short information of code change.>’
+
+Switch to another branch:
+--Note: this should be done only after committing all code change on current branch then only we should switch to another branch.--
+
+git checkout <another_branch>
+
+Push any local branch to any SRMS Ticket branch for staging it for release:
+--Note: This should be done only after committing all code change on current branch.--
+
+git push origin <current_branch> origin/ticket/<ticket_id>
+
+--------------------
+Discard local changes
+
+git clean –f To remove untracked files
+git clean –df To remove untracked files & directories
+git clean –xdf To remove untracked or ignored files & directories
+
+If on the other hand you want to keep the local modifications somehow, you'd use stash to hide them away before pulling, then reapply them afterwards:
+
+git stash
+git pull
+git stash pop
+
+----------------------
+- Useful for quick start
+----------------------
+--> Download all git branches from remote in local machine
+git fetch
+
+--> Create new local branch from remote branch
+git checkout -b local_link_track_462873 origin/ticket/462873
+
+--> To see what changes are added in remote branch
+git log --oneline origin/ticket/462407
+git log --pretty=format:"%h - %an, %ar : %s" --name-only origin/ticket/462407
+
+--> git log of a single revision
+git show <<commit id>>
+
+--> To pull and merge remote changes to local repository
+git pull --rebase origin ticket/462407
+git pull --rebase origin/ticket/462407 local_link_track_462407
+
+git reset --hard origin/ticket/463017
+
+--> delete local branch
+git branch -d local_link_track_462445
+
+--> Git pull local repository of another user
+git remote add ajha ~ajha/repos/bluehornet
+git fetch ajha
+git checkout -b local_ems_1179 remotes/ajha/ems/1179
+
+--> It lists the shortnames of each remote handle you’ve specified.
+git remote -v
+
+--> Git push from local to remote {git push [remote-name] [branch-name]}
+--> If you want to push your master branch to your origin server
+git push origin master
+
+--> If you want to see more information about a particular remote, you can use the git remote show [remote-name] command
+git remote show
+
+--> Rename remote
+git remote rename pb(from) paul(to)
+
+--> Rename remote If you want to remove a remote for some reason
+git remote rm paul
+
+--> See the last commit
+git log -1 HEAD
+
+--> Check diff between local branch and remote master branch
+git diff --name-only master remotes/origin/master
+
+
+--------------------------------------------------------------
+- Create new branch locally and push it in remote - defects
+--------------------------------------------------------------
+git checkout -b local_link_track_ems1342 master
+git checkout -b local_link_track_ems1342 origin/master
+git push origin local_link_track_ems1342:ticket/463165
+
+--> Delete local branch
+git branch -d local_link_track_463165
+
+git diff --name-only master remotes/origin/master
+--> Check file difference for one file against master 
+git diff origin/master echo30a/htdocs/client_post.htm
+
+------------------------------------------------------
+- Discard changes
+------------------------------------------------------
+--> Git hard reset (Note that if you've merged remote branches or have local commits and want to go back to the remote HEAD you must do:)
+git reset --hard origin/HEAD
+
+--> Git hard reset to (local branch head)
+git reset --hard HEAD
+
+--> When switching branches, proceed even if the index or the working tree differs from HEAD. This is used to throw away local changes. 
+git checkout -f <new_branch>
+
+--> If we want to keep the local changes while checkingout to new branch
+git stash save
+git checkout branch
+git stash pop
+
+--> change local copy, staged snapshot to match the file copy with master branch copy
+git checkout origin/master <<filepath>>
+
+-------------------------------------------------------------------
+- Git command to find from which local branch, remote branch was created
+-------------------------------------------------------------------
+git remote show origin
+For all branches: git branch -avv
+For local branches: git branch -lvv
+
+
+
